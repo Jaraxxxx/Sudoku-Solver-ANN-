@@ -13,13 +13,13 @@ from keras.layers.convolutional import Conv2D,MaxPooling2D
 import pickle
 
 ################ PARAMETERS ########################
-path = 'Image_Classification\myData'
+path = 'Image_Classification/myData'
 testRatio = 0.2
 valRatio = 0.2
-imageDimensions= (28,28,3)
-batchSizeVal= 50
-epochsVal = 10
-stepsPerEpochVal = 200
+imageDimensions= (32,32,3)
+batchSizeVal= 100
+epochsVal = 50
+stepsPerEpochVal = 50
 ####################################################
 
 #### IMPORTING DATA/IMAGES FROM FOLDERS
@@ -57,7 +57,7 @@ print(X_validation.shape)
 #### PLOT BAR CHART FOR DISTRIBUTION OF IMAGES
 numOfSamples= []
 for x in range(0,noOfClasses):
-    #print(len(np.where(y_train==x)[0]))
+    print(len(np.where(y_train==x)[0]))
     numOfSamples.append(len(np.where(y_train==x)[0]))
 print(numOfSamples)
 
@@ -68,7 +68,7 @@ plt.xlabel("Class ID")
 plt.ylabel("Number of Images")
 plt.show()
 
-#### PREPOSSESSING FUNCTION FOR IMAGES FOR TRAINING
+#### PREPROCESSING FUNCTION FOR IMAGES FOR TRAINING
 def preProcessing(img):
     img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     img = cv2.equalizeHist(img)
@@ -145,19 +145,22 @@ plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
 plt.legend(['training','validation'])
 plt.title('Loss')
-plt.xlabel('epoch')
+plt.xlabel('Epoch')
+plt.ylabel('Loss %')
 plt.figure(2)
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
 plt.legend(['training','validation'])
 plt.title('Accuracy')
-plt.xlabel('epoch')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy %')
 plt.show()
 
 #### EVALUATE USING TEST IMAGES
 score = model.evaluate(X_test,y_test,verbose=0)
 print('Test Score = ',score[0])
 print('Test Accuracy =', score[1])
+
 
 #### SAVE THE TRAINED MODEL
 model.save("myModel.h5",save_format='h5')

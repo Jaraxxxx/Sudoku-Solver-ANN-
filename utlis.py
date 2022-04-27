@@ -64,9 +64,9 @@ def getPredection(boxes,model):
         ## PREPARE IMAGE
         img = np.asarray(image)
         img = img[4:img.shape[0] - 4, 4:img.shape[1] -4]
-        img = cv2.resize(img, (28, 28))
+        img = cv2.resize(img, (32, 32))
         img = img / 255
-        img = img.reshape(1, 28, 28, 1)
+        img = img.reshape(1, 32, 32, 1)
         ## GET PREDICTION
         predictions = model.predict(img)
         classIndex = np.argmax(predictions, axis=-1)
